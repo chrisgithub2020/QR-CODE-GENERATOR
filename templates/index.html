@@ -1,10 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simple Form</title>
   <style>
+    .loader {
+      border: 16px solid #f3f3f3;
+      /* Light grey */
+      border-top: 16px solid #3498db;
+      /* Blue */
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin .5s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f6f8;
@@ -15,7 +37,7 @@
     }
 
     .m {
-        margin: 10px;
+      margin: 10px;
     }
 
     .container {
@@ -23,7 +45,7 @@
       padding: 30px;
       margin: 15px;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       text-align: center;
     }
 
@@ -45,9 +67,9 @@
       font-size: 16px;
       cursor: pointer;
     }
-    
+
     a {
-        padding: 10px 20px;
+      padding: 10px 20px;
       background-color: #007bff;
       color: white;
       border: none;
@@ -62,6 +84,7 @@
     }
   </style>
 </head>
+
 <body id="main">
   <div class="container">
     <h2>Enter Link </h2>
@@ -69,30 +92,33 @@
     <br />
     <button onclick="return generateCode()">Generate</button>
   </div>
-    <div class="container">
-        <img id="image-preview" src="{{image_url}}" alt="QR CODE"/>
-        <br/>
-        <a href="{{image_url}}" download="{{download_name}}">Download</a>
+  <span hidden="true" id="gen-load" class="loader"></span>
+  <div class="container">
+    <img id="image-preview" src="{{image_url}}" alt="QR CODE" />
+    <br />
+    <a href="{{image_url}}" download="{{download_name}}">Download</a>
   </div>
 </body>
 <script>
-    function generateCode() {
-        let url = document.getElementById("link-field").value
-        
-        if (url.trim() === "") {
-            alert("enter a valid url")
-        }
+  function generateCode() {
+    let url = document.getElementById("link-field").value
 
-        fetch(`https://qr-code-generator-00ba.onrender.com/generate_code/${url}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }).then(response=>response.text()).then((result) => {
-            document.getElementById("main").innerHTML = result
-            console.log(result)
-        })
+    if (url.trim() === "") {
+      alert("enter a valid url")
     }
+    
+    document.getElementById("gen-load").hidden = true
+    fetch(`https://qr-code-generator-00ba.onrender.com/generate_code/${url}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(response => response.text()).then((result) => {
+      document.getElementById("main").innerHTML = result
+      document.getElementById("gen-load").hidden = false
+    })
+  }
 
 </script>
+
 </html>

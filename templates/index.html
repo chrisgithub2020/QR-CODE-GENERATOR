@@ -108,9 +108,9 @@
     }
     
     document.getElementById("gen-load").hidden = false
-    fetch(`https://qr-code-generator-00ba.onrender.com/generate_code`, {
+    fetch(`http://localhost:8000/generate_code`, {
       method: "POST",
-      body: url,
+      body: JSON.stringify({url: url}),
       headers: {
         "Content-Type": "application/json"
       }

@@ -6,6 +6,7 @@ import uuid
 
 def generate_qr_code(link: str):
     f_name = uuid.uuid4().__str__()
+    print(link)
     qr = qrcode.QRCode(
         version=5,
         error_correction=qrcode.constants.ERROR_CORRECT_H,

@@ -15,7 +15,7 @@ templates = Jinja2Templates(directory="templates")
 def root(request: Request):
     return templates.TemplateResponse(request=request, name="index.html", context={"image_url":"./images/default.png", "download_name":"default.png"})
 
-@app.get("/generate_code/{link}", response_class=HTMLResponse)
+@app.post("/generate_code", response_class=HTMLResponse)
 def generate_code(link: str, request: Request):
 
     file_name = generate_qr_code(link=link)

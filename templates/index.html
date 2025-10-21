@@ -108,8 +108,9 @@
     }
     
     document.getElementById("gen-load").hidden = false
-    fetch(`https://qr-code-generator-00ba.onrender.com/generate_code/${url}`, {
-      method: "GET",
+    fetch(`https://qr-code-generator-00ba.onrender.com/generate_code`, {
+      method: "POST",
+      body: url,
       headers: {
         "Content-Type": "application/json"
       }
